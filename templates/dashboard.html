@@ -1,0 +1,149 @@
+{% extends "base.html" %}
+
+{% block title %}
+
+Dashboard
+
+{% endblock %}
+
+{% block content %}
+
+<h1>DriveDirect Dashboard</h1>
+
+<div class="cards">
+
+<div class="card">
+
+<h3>Total Cars</h3>
+
+<h2>{{ total_cars }}</h2>
+
+</div>
+
+<div class="card">
+
+<h3>Available Cars</h3>
+
+<h2>{{ available_cars }}</h2>
+
+</div>
+
+<div class="card">
+
+<h3>Rented Cars</h3>
+
+<h2>{{ rented_cars }}</h2>
+
+</div>
+
+<div class="card">
+
+<h3>Maintenance</h3>
+
+<h2>{{ maintenance_cars }}</h2>
+
+</div>
+
+<div class="card">
+
+<h3>Customers</h3>
+
+<h2>{{ total_customers }}</h2>
+
+</div>
+
+<div class="card">
+
+<h3>Active Rentals</h3>
+
+<h2>{{ active_rentals }}</h2>
+
+</div>
+
+<div class="card">
+
+<h3>Total Revenue</h3>
+
+<h2>₦{{ "%.2f"|format(revenue) }}</h2>
+
+</div>
+
+<div class="card">
+
+<h3>Maintenance Cost</h3>
+
+<h2>₦{{ maintenance_cost }}</h2>
+
+</div>
+
+</div>
+
+<h2>Recent Rentals</h2>
+
+<table>
+
+<tr>
+
+<th>Customer</th>
+
+<th>Vehicle</th>
+
+<th>Status</th>
+
+<th>Total</th>
+
+</tr>
+
+{% for rental in recent_rentals %}
+
+<tr>
+
+<td>{{ rental.customer.full_name }}</td>
+
+<td>{{ rental.car.brand }} {{ rental.car.model }}</td>
+
+<td>{{ rental.status }}</td>
+
+<td>₦{{ rental.total_amount }}</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+<hr>
+
+<h2>Vehicle Status</h2>
+
+<div class="chart-wrap">
+<canvas id="vehicleChart"></canvas>
+</div>
+
+
+<hr>
+
+<h2>Revenue Overview</h2>
+
+<div class="chart-wrap">
+<canvas id="revenueChart"></canvas>
+</div>
+
+<script>
+
+window.availableCars={{ available_cars }};
+
+window.rentedCars={{ rented_cars }};
+
+window.maintenanceCars={{ maintenance_cars }};
+
+window.revenue={{ revenue }};
+
+window.maintenanceCost={{ maintenance_cost }};
+
+</script>
+
+
+
+
+{% endblock %}

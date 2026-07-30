@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}New Rental{% endblock %}
+
+{% block content %}
+
+<h1>Book Vehicle</h1>
+
+<form method="POST">
+
+<label>Customer</label>
+
+<select name="customer" required>
+
+{% for customer in customers %}
+
+<option value="{{ customer.id }}">
+{{ customer.full_name }}
+</option>
+
+{% endfor %}
+
+</select>
+
+<label>Vehicle</label>
+
+<select name="car" required>
+
+{% for car in cars %}
+
+<option value="{{ car.id }}">
+{{ car.brand }} {{ car.model }}
+</option>
+
+{% endfor %}
+
+</select>
+
+<label>Start Date</label>
+
+<input type="date" name="start_date" required>
+
+<label>End Date</label>
+
+<input type="date" name="end_date" required>
+
+<button type="submit">
+
+Book Vehicle
+
+</button>
+
+</form>
+
+{% endblock %}

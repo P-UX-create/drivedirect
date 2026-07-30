@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+
+{% block title %}Cars{% endblock %}
+
+{% block content %}
+
+<h1>Cars</h1>
+
+<form method="GET">
+
+<input
+type="text"
+name="search"
+placeholder="Search vehicle..."
+value="{{ search }}">
+
+<button type="submit">
+
+Search
+
+</button>
+
+</form>
+
+<a href="{{ url_for('cars.add_car') }}">
+Add New Car
+</a>
+
+<table>
+
+<tr>
+
+<th>Images</th>
+
+<th>ID</th>
+
+<th>Brand</th>
+
+<th>Model</th>
+
+<th>Year</th>
+
+<th>Plate</th>
+
+<th>Price/Day</th>
+
+<th>Status</th>
+
+<th>Actions</th>
+
+</tr>
+
+{% for car in cars %}
+
+
+<tr>
+
+<td>
+
+{% if car.image %}
+
+<img
+src="{{ url_for('static', filename='uploads/' + car.image) }}"
+width="120">
+
+{% endif %}
+
+</td>
+
+<td>{{ car.id }}</td>
+
+<td>{{ car.brand }}</td>
+
+<td>{{ car.model }}</td>
+
+<td>{{ car.year }}</td>
+
+<td>{{ car.plate_number }}</td>
+
+<td>₦{{ car.price_per_day }}</td>
+
+<td>{{ car.status }}</td>
+
+<td>
+
+<a href="{{ url_for('cars.edit_car', id=car.id) }}">
+Edit
+</a>
+
+|
+
+<a href="{{ url_for('cars.delete_car', id=car.id) }}">
+Delete
+</a>
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+{% endblock %}

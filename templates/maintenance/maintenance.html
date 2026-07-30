@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %}Maintenance{% endblock %}
+
+{% block content %}
+
+<h1>Maintenance Records</h1>
+
+<a href="{{ url_for('maintenance.add_maintenance') }}">
+Add Maintenance
+</a>
+
+<table>
+
+<tr>
+    <th>Car</th>
+    <th>Mechanic</th>
+    <th>Service Date</th>
+    <th>Next Service</th>
+    <th>Cost</th>
+    <th>Status</th>
+    <th>Action</th>
+</tr>
+
+{% for record in records %}
+
+<tr>
+
+<td>
+{{ record.car.brand }}
+{{ record.car.model }}
+</td>
+
+<td>{{ record.mechanic }}</td>
+
+<td>{{ record.service_date }}</td>
+
+<td>{{ record.next_service }}</td>
+
+<td>₦{{ record.cost }}</td>
+
+<td>{{ record.status }}</td>
+
+<td>
+
+{% if record.status == "In Progress" %}
+
+<a href="{{ url_for('maintenance.complete_maintenance', id=record.id) }}">
+Complete
+</a>
+
+{% else %}
+
+Completed
+
+{% endif %}
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+{% endblock %}

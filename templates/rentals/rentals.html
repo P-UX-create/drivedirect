@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block title %}Rentals{% endblock %}
+
+{% block content %}
+
+<h1>Rentals</h1>
+
+<a href="{{ url_for('rentals.add_rental') }}">
+New Rental
+</a>
+
+<a href="{{ url_for('reports.export_rentals') }}">
+
+Export CSV
+
+</a>
+
+<form method="GET">
+
+<select name="status">
+
+<option value="">All</option>
+
+<option value="Active">Active</option>
+
+<option value="Returned">Returned</option>
+
+</select>
+
+<button>Filter</button>
+
+</form>
+
+
+<table>
+
+<tr>
+
+<th>Customer</th>
+
+<th>Car</th>
+
+<th>Start</th>
+
+<th>End</th>
+
+<th>Total</th>
+
+<th>Status</th>
+
+<th>Late_fee</th>
+
+<th>Action</th>
+
+</tr>
+
+{% for rental in rentals %}
+
+<tr>
+
+<td>{{ rental.customer.full_name }}</td>
+
+<td>{{ rental.car.brand }} {{ rental.car.model }}</td>
+
+<td>{{ rental.start_date }}</td>
+
+<td>{{ rental.end_date }}</td>
+
+<td>₦{{ rental.total_amount }}</td>
+
+<td>{{ rental.status }}</td>
+
+<td>₦{{ rental.late_fee }}</td>
+
+<td>
+
+{% if rental.status=="Active" %}
+
+<a href="{{ url_for('rentals.return_vehicle', id=rental.id) }}">
+Return
+</a>
+
+{% else %}
+
+Returned
+
+{% endif %}
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+{% endblock %}

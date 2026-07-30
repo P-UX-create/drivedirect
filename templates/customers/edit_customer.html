@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Customer{% endblock %}
+
+{% block content %}
+
+<h1>Edit Customer</h1>
+
+<form method="POST">
+
+<input type="text" name="full_name" value="{{ customer.full_name }}" required>
+
+<input type="email" name="email" value="{{ customer.email }}" required>
+
+<input type="text" name="phone" value="{{ customer.phone }}" required>
+
+<input type="text" name="driver_license" value="{{ customer.driver_license }}" required>
+
+<textarea name="address">{{ customer.address }}</textarea>
+
+<button type="submit">
+Update Customer
+</button>
+
+</form>
+
+{% endblock %}

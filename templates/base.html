@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>{% block title %}{% endblock %}</title>
+
+<link rel="stylesheet"
+href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+<nav>
+
+<h2>DriveDirect</h2>
+
+<ul>
+
+<li><a href="{{ url_for('dashboard.dashboard') }}">Dashboard</a></li>
+
+<li>
+    <a href="{{ url_for('cars.all_cars') }}">
+        Cars
+    </a>
+</li>
+
+<li>
+    <a href="{{ url_for('customers.all_customers') }}">
+        Customers
+    </a>
+</li>
+
+<li>
+    <a href="{{ url_for('rentals.all_rentals') }}">
+        Rentals
+    </a>
+</li>
+
+<li>
+    <a href="{{ url_for('maintenance.all_maintenance') }}">
+        Maintenance
+    </a>
+</li>
+
+<li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
+
+</ul>
+
+</nav>
+
+<div class="container">
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+
+    {% if messages %}
+
+        {% for category, message in messages %}
+
+            <div class="alert alert-{{ category }}">
+                {{ message }}
+            </div>
+
+        {% endfor %}
+
+    {% endif %}
+
+{% endwith %}
+
+{% block content %}
+
+{% endblock %}
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+</body>
+
+</html>

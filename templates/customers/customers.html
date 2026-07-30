@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block title %}Customers{% endblock %}
+
+{% block content %}
+
+<h1>Customers</h1>
+
+<form method="GET">
+
+<input
+type="text"
+name="search"
+placeholder="Search customer..."
+value="{{ search }}">
+
+<button>
+
+Search
+
+</button>
+
+</form>
+
+<a href="{{ url_for('customers.add_customer') }}">
+    Add Customer
+</a>
+
+<table>
+
+<tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Phone</th>
+    <th>Driver Licence</th>
+    <th>Actions</th>
+</tr>
+
+{% for customer in customers %}
+
+<tr>
+
+<td>{{ customer.id }}</td>
+
+<td>{{ customer.full_name }}</td>
+
+<td>{{ customer.email }}</td>
+
+<td>{{ customer.phone }}</td>
+
+<td>{{ customer.driver_license }}</td>
+
+<td>
+
+<a href="{{ url_for('customers.edit_customer', id=customer.id) }}">
+Edit
+</a>
+
+|
+
+<a href="{{ url_for('customers.delete_customer', id=customer.id) }}">
+Delete
+</a>
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+{% endblock %}
