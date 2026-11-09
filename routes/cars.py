@@ -1,4 +1,5 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash
+from sqlalchemy.exc import IntegrityError
+from flask import current_app, Blueprint, render_template, request, redirect, url_for, flash
 from werkzeug.utils import secure_filename
 import os
 from flask_login import login_required
@@ -49,7 +50,7 @@ def add_car():
 
             image.save(
                 os.path.join(
-                    "static",
+                    current_app.static_folder,
                     "uploads",
                     filename
                 )
@@ -68,7 +69,13 @@ def add_car():
         )
 
         db.session.add(car)
-        db.session.commit()
+
+        try:
+            db.session.commit()
+        except IntegrityError:
+            db.session.rollback()
+            flash("A car with that plate number already exists.", "error")
+            return render_template("cars/add_car.html")
 
         flash("Car added successfully.")
 
@@ -103,7 +110,12 @@ def edit_car(id):
 
         car.status = request.form["status"]
 
-        db.session.commit()
+        try:
+            db.session.commit()
+        except IntegrityError:
+            db.session.rollback()
+            flash("A car with that plate number already exists.", "error")
+            return redirect(url_for("cars.edit_car", id=id))
 
         flash("Car updated successfully.")
 

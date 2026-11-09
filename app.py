@@ -1,8 +1,14 @@
-from flask import Flask, redirect, url_for
+from datetime import datetime
+
+from flask import Flask, render_template
 
 from config import Config
 
 from models import db, login_manager
+from models.user import User
+from models.car import Car
+from models.customer import Customer
+from models.rental import Rental
 from models.maintenance import Maintenance
 
 from routes.auth import auth
@@ -23,6 +29,10 @@ db.init_app(app)
 
 login_manager.init_app(app)
 
+# Make sure every table (including users) exists, whichever way the app is started.
+with app.app_context():
+    db.create_all()
+
 app.register_blueprint(auth)
 app.register_blueprint(dashboard_bp)
 app.register_blueprint(cars)
@@ -34,12 +44,14 @@ app.register_blueprint(reports)
 
 
 
+@app.context_processor
+def inject_year():
+    return {"now_year": datetime.now().year}
+
+
 @app.route("/")
 def home():
-    return redirect(url_for("auth.login"))
+    return render_template("home.html")
 
 if __name__ == "__main__":
-    with app.app_context():
-        db.create_all()
-
     app.run(debug=True)

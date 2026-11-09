@@ -1,3 +1,4 @@
+from sqlalchemy.exc import IntegrityError
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 
 from flask_login import login_required
@@ -55,7 +56,12 @@ def add_customer():
 
         db.session.add(customer)
 
-        db.session.commit()
+        try:
+            db.session.commit()
+        except IntegrityError:
+            db.session.rollback()
+            flash("A customer with that email or driver license already exists.", "error")
+            return render_template("customers/add_customer.html")
 
         flash("Customer added successfully.")
 
@@ -83,7 +89,12 @@ def edit_customer(id):
 
         customer.address = request.form["address"]
 
-        db.session.commit()
+        try:
+            db.session.commit()
+        except IntegrityError:
+            db.session.rollback()
+            flash("A customer with that email or driver license already exists.", "error")
+            return redirect(url_for("customers.edit_customer", id=id))
 
         flash("Customer updated successfully.")
 

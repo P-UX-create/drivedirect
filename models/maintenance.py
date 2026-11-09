@@ -1,7 +1,7 @@
 from models import db
 
 class Maintenance(db.Model):
-    tablename = "maintenance"
+    __tablename__ = "maintenance"
 
     id = db.Column(db.Integer, primary_key=True)
 

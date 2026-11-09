@@ -1,7 +1,7 @@
 from models import db
 
 class Car(db.Model):
-    tablename = "cars"
+    __tablename__ = "car"
 
     id = db.Column(db.Integer, primary_key=True)
 
@@ -25,12 +25,7 @@ class Car(db.Model):
     )
 
     image = db.Column(
-        db.String(255),
-        default="default-car.jpg"
-    )
-
-    image = db.Column(
-        db.String(250)
+        db.String(255)
     )
 
 

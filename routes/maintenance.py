@@ -56,10 +56,13 @@ def add_maintenance():
 
             cost=request.form["cost"],
 
-            next_service=datetime.strptime(
-                request.form["next_service"],
-                "%Y-%m-%d"
-            ).date()
+            next_service=(
+                datetime.strptime(
+                    request.form["next_service"],
+                    "%Y-%m-%d"
+                ).date()
+                if request.form.get("next_service") else None
+            )
 
         )
 

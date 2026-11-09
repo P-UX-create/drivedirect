@@ -8,7 +8,7 @@ def load_user(user_id):
 
 
 class User(UserMixin, db.Model):
-    tablename = "users"
+    __tablename__ = "user"
 
     id = db.Column(db.Integer, primary_key=True)
 

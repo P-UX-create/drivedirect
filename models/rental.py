@@ -1,7 +1,7 @@
 from models import db
 
 class Rental(db.Model):
-    tablename = "rentals"
+    __tablename__ = "rental"
 
     id = db.Column(db.Integer, primary_key=True)
 

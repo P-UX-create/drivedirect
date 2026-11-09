@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DriveDirect – Car Rental Management</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+</head>
+<body class="home">
+
+<header class="home-bar">
+    <a class="home-logo" href="{{ url_for('home') }}">DriveDirect</a>
+    <div class="home-bar-links">
+        {% if current_user.is_authenticated %}
+            <a class="btn-solid" href="{{ url_for('dashboard.dashboard') }}">Go to Dashboard</a>
+        {% else %}
+            <a class="btn-ghost" href="{{ url_for('auth.login') }}">Login</a>
+            <a class="btn-solid" href="{{ url_for('auth.register') }}">Create Account</a>
+        {% endif %}
+    </div>
+</header>
+
+<main>
+
+<section class="hero">
+    <div class="hero-text">
+        <span class="plate">NG · DRIVE-01</span>
+        <h1>Run your car rental business from one place.</h1>
+        <p>DriveDirect helps you manage your fleet, customers, rentals and
+        maintenance, and see your revenue at a glance.</p>
+        <div class="hero-actions">
+            {% if current_user.is_authenticated %}
+                <a class="btn-solid btn-lg" href="{{ url_for('dashboard.dashboard') }}">Go to Dashboard</a>
+            {% else %}
+                <a class="btn-solid btn-lg" href="{{ url_for('auth.login') }}">Login to continue</a>
+                <a class="btn-ghost btn-lg" href="{{ url_for('auth.register') }}">Create Account</a>
+            {% endif %}
+        </div>
+    </div>
+    <div class="hero-img">
+        <img src="{{ url_for('static', filename='uploads/car1.jpg') }}" alt="Rental car" onerror="this.parentElement.style.display='none'">
+    </div>
+</section>
+
+<section class="features">
+    <h2>What you can do</h2>
+    <div class="feature-grid">
+        <article><h3>Manage cars</h3><p>Add vehicles with photos, plate numbers, prices and status.</p></article>
+        <article><h3>Track customers</h3><p>Keep customer details and driver licence records in one list.</p></article>
+        <article><h3>Handle rentals</h3><p>Create rentals, calculate totals automatically and record returns.</p></article>
+        <article><h3>Schedule maintenance</h3><p>Log services and keep cars out of rotation until they are ready.</p></article>
+        <article><h3>Dashboard &amp; reports</h3><p>Live charts of fleet status and revenue, plus CSV export of rentals.</p></article>
+    </div>
+</section>
+
+</main>
+
+<footer class="home-foot">© {{ now_year }} DriveDirect · Car Rental Management System</footer>
+
+</body>
+</html>
